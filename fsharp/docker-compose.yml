@@ -1,0 +1,23 @@
+paketdata:
+    image: mono:latest
+    volumes:
+      - /opt/paket/packages
+
+paket:
+    build: paket
+    volumes_from:
+      - paketdata
+    volumes:
+      - .:/opt/paket/
+    working_dir: /opt/paket/
+    entrypoint: paket
+    command: install
+
+fsi:
+    image: mono:latest
+    volumes_from:
+      - paketdata
+    volumes:
+      - .:/opt/src:ro
+    working_dir: /opt/src
+    entrypoint: fsharpi
