@@ -16,4 +16,7 @@ In order to make use of Playgrounds, you'll need to install Docker and Docker-Co
 Any subsequent sessions, just run `make play`
 
 ## List of Playgrounds
+* F#
+* Haskell
 * Neo4j and py2neo
+* Python
