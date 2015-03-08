@@ -1,0 +1,28 @@
+neo4j:
+    image: tpires/neo4j
+    ports:
+      - "7474"
+
+virtualenvdata:
+  image: ubuntu:14.04
+  volumes:
+    - /opt/virtualenv
+
+virtualenv:
+  build: ../python
+  volumes:
+    - requirements/:/opt/requirements
+  volumes_from:
+    - virtualenvdata
+  entrypoint: ./setup_virtualenv.sh
+
+ipython:
+  build: ../python
+  links:
+    - neo4j:neo4j
+  volumes_from:
+    - virtualenvdata
+  volumes:
+    - .:/opt/playground
+  working_dir: /opt/playground
+  entrypoint: /opt/virtualenv/bin/ipython

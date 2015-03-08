@@ -1,0 +1,2 @@
+ipython
+py2neo
