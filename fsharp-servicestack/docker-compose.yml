@@ -1,0 +1,30 @@
+builddata:
+    image: mono:latest
+    volumes:
+      - /opt/build
+
+paket:
+    image: mono:latest
+    volumes:
+      - .:/opt/app
+    working_dir: /opt/app/
+    entrypoint: /bin/bash
+
+build:
+    image: mono:latest
+    volumes_from:
+      - builddata
+    volumes:
+      - .:/opt/3things
+    working_dir: /opt/3things
+    entrypoint: xbuild
+    command: src/WebApi.fsproj
+
+app:
+    image: mono:latest
+    volumes_from:
+      - builddata
+    entrypoint: mono
+    command: /opt/build/bin/WebApi.exe
+    ports:
+      - "8080"
